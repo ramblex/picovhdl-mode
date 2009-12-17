@@ -84,7 +84,7 @@
 (defvar picovhdl-idle-timer nil)
 (defvar picovhdl-delay (/ (float 1) (float 16)))
 (defvar picovhdl-mode-bool nil) ;; Whether the current buffer is using picovhdl
-(defvar c++-open-delim "\\(SIM\\|HFA\\)_[ 0-9@A-Z]+CODE")
+(defvar c++-open-delim "\\(SIM\\|HFA\\)_[ 0-9@A-Za-z]+CODE")
 (defvar c++-close-delim "ENDCODE")
 
 (defun picovhdl-setup ()
