@@ -69,6 +69,16 @@
   :type 'integer
   :group 'picovhdl)
 
+(defcustom picovhdl-c++-mode-hook nil
+  "List of functions to be executed on entry to `picovhdl-c++-mode'."
+  :type 'hook
+  :group 'picovhdl)
+
+(defcustom picovhdl-vhdl-mode-hook nil
+  "List of functions to be executed on entry to `picovhdl-vhdl-mode'."
+  :type 'hook
+  :group 'picovhdl)
+
 ;; Local variables
 (defvar picovhdl-update 0)
 (defvar picovhdl-idle-timer nil)
@@ -194,6 +204,7 @@
   (setq indent-line-function 'picovhdl-indent-line)
   (setq indent-region-function 'picovhdl-indent-region)
   (setq c-electric-flag nil)
+  (run-hooks 'picovhdl-c++-mode-hook)
   (picovhdl-setup))
 
 (define-derived-mode picovhdl-vhdl-mode vhdl-mode "picoVHDL (VHDL)"
@@ -203,13 +214,28 @@
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'picovhdl-indent-line)
   (setq indent-region-function 'picovhdl-indent-region)
+  (run-hooks 'picovhdl-vhdl-mode-hook)
   (picovhdl-setup))
 
-(font-lock-add-keywords 
- 'picovhdl-c++-mode
- '(("\\(SIM_[A-Z]+\\)" 1 font-lock-preprocessor-face prepend)
-   ("\\<\\(CODE\\)" 1 font-lock-preprocessor-face prepend)
-   ("\\<\\(ENDCODE\\)" 1 font-lock-preprocessor-face prepend)))
+(defvar picovhdl-kwds
+  '("integer8"
+    "integer8pair_complex8"
+    "integer8quad"
+    "integer16"
+    "integer16_complex8"
+    "integer16_integer8pair"
+    "integer16pair"
+    "integer32"
+    "integer64"))
+
+;; Common keywords
+(defvar common-kwds
+  '(("\\(SIM_[A-Z]+\\)" 1 font-lock-preprocessor-face prepend)
+    ("\\<\\(CODE\\)" 1 font-lock-preprocessor-face prepend)
+    ("\\<\\(ENDCODE\\)" 1 font-lock-preprocessor-face prepend)
+    ))
+(font-lock-add-keywords 'picovhdl-c++-mode common-kwds)
+(font-lock-add-keywords 'picovhdl-vhdl-mode common-kwds)
 
 ;(add-hook 'vhdl-mode-hook 'picovhdl-setup)
 
