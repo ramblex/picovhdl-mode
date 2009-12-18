@@ -217,7 +217,7 @@
   (run-hooks 'picovhdl-vhdl-mode-hook)
   (picovhdl-setup))
 
-(defvar picovhdl-kwds
+(defvar picovhdl-types
   '("complex"
     "complex8"
     "complex8pair"
@@ -234,18 +234,14 @@
     "integer32"
     "integer64"))
 
-;(regexp-opt picovhdl-kwds 'words)
-
 ;; Common keywords
 (setq common-kwds
-  '(("\\(SIM_[A-Z]+\\)" 1 font-lock-preprocessor-face prepend)
+  `(("\\(SIM_[A-Z]+\\)" 1 font-lock-preprocessor-face prepend)
     ("\\<\\(CODE\\)" 1 font-lock-preprocessor-face prepend)
     ("\\<\\(ENDCODE\\)" 1 font-lock-preprocessor-face prepend)
-    ("\\<\\(complex\\(?:16\\|32\\|64\\|8\\(?:pair\\)?\\)?\\|integer\\(?:16\\(?:_\\(?:complex8\\|integer8pair\\)\\|pair\\)?\\|32\\|64\\|8\\(?:pair_complex8\\|quad\\)?\\)\\)\\>" . font-lock-type-face)
+    (,(regexp-opt picovhdl-types 'words) . font-lock-type-face)
     ))
 (font-lock-add-keywords 'picovhdl-c++-mode common-kwds)
 (font-lock-add-keywords 'picovhdl-vhdl-mode common-kwds)
-
-;(add-hook 'vhdl-mode-hook 'picovhdl-setup)
 
 (provide 'picovhdl-mode)
