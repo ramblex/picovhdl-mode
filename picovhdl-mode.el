@@ -130,15 +130,14 @@
       (picovhdl-switch-to 'picovhdl-vhdl-mode))))
 
 (defun set-brace-strs ()
-
-(setq open-brace-str 
-  (concat "\n" 
-   (make-string picovhdl-c++-indent-offset (string-to-char " ")) 
-   "{"))
-
- (setq close-brace-str
-  (concat (make-string picovhdl-c++-indent-offset (string-to-char " "))
-   "}\n")))
+  "Setup the strings used to handle C++ indentation"
+  (setq open-brace-str 
+        (concat "\n" 
+                (make-string picovhdl-c++-indent-offset (string-to-char " ")) 
+                "{"))
+  (setq close-brace-str
+        (concat (make-string picovhdl-c++-indent-offset (string-to-char " "))
+                "}\n")))
 
 (defun picovhdl-add-c-braces ()
   "Helper function used in picovhdl indent functions"
